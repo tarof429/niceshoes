@@ -1,0 +1,25 @@
+{
+    "name": "test-system",
+    "profile": "centos79-x86_64",
+    "hostname": "localhost",
+    "interfaces": [
+      {
+        "name": "eth0",
+        "netmask": "255.255.255.0",
+        "macaddress": "AC:AB:AA:12:24:CA",
+        "gateway": "192.168.1.1",
+        "ipAddress": "192.168.1.10",
+        "kernelOptons": "",
+        "static": "1"
+      },
+      {
+        "name": "eth1",
+        "netmask": "255.255.255.0",
+        "macaddress": "AC:AB:AA:12:25:CB",
+        "gateway": "192.168.1.1",
+        "ipAddress": "192.168.1.11",
+        "static": "1"
+      }
+    ]
+  }
+  
