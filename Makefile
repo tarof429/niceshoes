@@ -13,8 +13,7 @@ help: ## Display this help
 # 	cp niceshoes img
 
 build:
-	go build -o niceshoes
-	cp niceshoes cmd
+	go build -o cmd/niceshoes
 
 docker: ## Build docker image
 	cd img; docker build -t tarof429/niceshoes:1  .
@@ -29,4 +28,4 @@ test: ## Run all tests
 	go test -v ./...
 
 clean:
-	@rm -f niceshoes
+	@rm -f cmd/niceshoes
