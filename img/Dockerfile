@@ -10,8 +10,6 @@ RUN dnf install -y            \
     supervisor                \
     wget
 
-RUN mkdir -p /cmd 
-
 COPY supervisord/supervisord.conf /etc/supervisord.conf
 COPY supervisord/conf.d /etc/supervisord/conf.d
 
