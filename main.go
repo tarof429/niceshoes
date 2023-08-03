@@ -4,16 +4,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"tarof429/niceshoes/niceshoes"
 )
 
-
-
 func load(file *string) ([]niceshoes.Csystem, error) {
-	data, err := ioutil.ReadFile(*file)
+	data, err := os.ReadFile(*file)
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
@@ -36,7 +33,7 @@ func main() {
 	file := flag.String("file", "", "JSON file containg systems to import")
 
 	flag.Parse()
-	
+
 	css, err := load(file)
 
 	if err != nil {
@@ -45,11 +42,11 @@ func main() {
 
 	if err == nil {
 		for _, cs := range css {
-			fmt.Printf("Importing: %s", cs)
+			//log.Printf("Importing: %s", cs)
 			err := cs.Import()
 			//err := cs.ImportSimulator()
 			if err != nil {
-				fmt.Println("Unable to import ", cs.Name)
+				log.Fatal("Unable to import ", cs.Name)
 			}
 		}
 	}

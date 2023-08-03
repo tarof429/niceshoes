@@ -50,7 +50,7 @@ cobbler import --path=/mnt --name=centos79
 7. Import the systems
 
 ```
-/cmd/niceshoes --file samples/system.json
+/usr/local/bin/niceshoes --file samples/system.json
 ```
 
 // may need to do: cobbler system edit --name=test-system --delete-interface --interface=default
