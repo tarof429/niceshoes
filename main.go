@@ -9,7 +9,7 @@ import (
 	"tarof429/niceshoes/niceshoes"
 )
 
-func load(file *string) ([]niceshoes.Csystem, error) {
+func load(file *string) ([]niceshoes.SystemCobblerSystem, error) {
 	data, err := os.ReadFile(*file)
 
 	if err != nil {
@@ -17,7 +17,7 @@ func load(file *string) ([]niceshoes.Csystem, error) {
 		return nil, err
 	}
 
-	var cs []niceshoes.Csystem
+	var cs []niceshoes.SystemCobblerSystem
 
 	if err := json.Unmarshal(data, &cs); err != nil {
 		log.Fatalf("JSON unmarshalling failed: %s\n", err)
