@@ -29,14 +29,14 @@ func compareArrays(x []string, y []string) bool {
 
 func TestList(t *testing.T) {
 
-	c := SystemCobblerSystem{
+	c := CobblerSystem{
 		Name:        "test",
 		Profile:     "test",
 		Hostname:    "localhost",
-		Cinterfaces: []Cinterface{},
+		NICs: []CobblerSystemNIC{},
 	}
 
-	cmdLine := c.GetCmdLine("list", Cinterface{})
+	cmdLine := c.GetCmdLine("list", CobblerSystemNIC{})
 	expected := []string{"system", "list", "--name=" + c.Name}
 
 	if compareArrays(cmdLine, expected) != true {
@@ -47,13 +47,13 @@ func TestList(t *testing.T) {
 
 func TestAdd(t *testing.T) {
 
-	c := SystemCobblerSystem{
+	c := CobblerSystem{
 		Name:     "test",
 		Profile:  "test",
 		Hostname: "localhost",
 	}
 
-	cmdLine := c.GetCmdLine("add", Cinterface{})
+	cmdLine := c.GetCmdLine("add", CobblerSystemNIC{})
 	expected := []string{"system", "add", "--name=" +
 		c.Name, "--hostname=" + c.Hostname, "--profile=" + c.Profile}
 
@@ -65,12 +65,12 @@ func TestAdd(t *testing.T) {
 
 func TestEdit(t *testing.T) {
 
-	c := SystemCobblerSystem{
+	c := CobblerSystem{
 		Name:     "test",
 		Profile:  "test",
 		Hostname: "localhost",
 		KernelOptions: "",
-		Cinterfaces: []Cinterface{
+		NICs: []CobblerSystemNIC{
 			{
 				Name:          "eth0",
 				Netmask:       "255.255.255.0",
@@ -83,7 +83,7 @@ func TestEdit(t *testing.T) {
 		},
 	}
 
-	inter := c.Cinterfaces[0]
+	inter := c.NICs[0]
 
 	cmdLine := c.GetCmdLine("edit", inter)
 	expected := []string{"system", "edit", "--name=" + c.Name,
@@ -103,14 +103,14 @@ func TestEdit(t *testing.T) {
 
 func TestRemoveDefaultInterface(t *testing.T) {
 
-	c := SystemCobblerSystem{
+	c := CobblerSystem{
 		Name:        "test",
 		Profile:     "test",
 		Hostname:    "localhost",
-		Cinterfaces: []Cinterface{},
+		NICs: []CobblerSystemNIC{},
 	}
 
-	cmdLine := c.GetCmdLine("remove-default-interface", Cinterface{})
+	cmdLine := c.GetCmdLine("remove-default-interface", CobblerSystemNIC{})
 
 	expected := []string{"system", "edit", "--name=" + c.Name,
 		"--delete-interface",

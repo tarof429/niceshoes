@@ -8,6 +8,6 @@ type CobblerDomain interface {
 	GetKernelOptions() string
 	GetNameServers() string
 	GetNextServerV4() string
-	GetCmdLine(command string, inter Cinterface) []string
+	GetCmdLine(command string, inter CobblerSystemNIC) []string
 }
 

@@ -1,6 +1,6 @@
 package niceshoes
 
-type Cinterface struct {
+type CobblerSystemNIC struct {
 	Name            string `json:"name"`
 	Netmask         string `json:"netmask"`
 	MACAdress       string `json:"macaddress"`

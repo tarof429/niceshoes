@@ -9,43 +9,43 @@ const (
 	CMD = "cobbler"
 )
 
-type SystemCobblerSystem struct {
+type CobblerSystem struct {
 	Name          string       `json:"name"`
 	Hostname      string       `json:"hostname"`
 	Profile       string       `json:"profile"`
 	KernelOptions string       `json:"kernelOptons"`
 	NameServers   string       `json:"nameServers"`
 	NextServerV4    string       `json:"nextServerV4"`
-	Cinterfaces   []Cinterface `json:"interfaces"`
+	NICs   []CobblerSystemNIC `json:"nics"`
 }
 
-func (c SystemCobblerSystem) GetName() string {
+func (c CobblerSystem) GetName() string {
 	return c.Name
 }
 
-func (c SystemCobblerSystem) GetHostname() string {
+func (c CobblerSystem) GetHostname() string {
 	return c.Hostname
 }
 
-func (c SystemCobblerSystem) GetProfile() string {
+func (c CobblerSystem) GetProfile() string {
 	return c.Profile
 }
 
-func (c SystemCobblerSystem) GetKernelOptions() string {
+func (c CobblerSystem) GetKernelOptions() string {
 	return c.KernelOptions
 }
 
-func (c SystemCobblerSystem) GetNameServers() string {
+func (c CobblerSystem) GetNameServers() string {
 	return c.NameServers
 }
 
-func (c SystemCobblerSystem) GetNextServerV4() string {
+func (c CobblerSystem) GetNextServerV4() string {
 	return c.NextServerV4
 }
 
 // GetCmdline returns the command-line string bsed on the command and
 // values in Cinterface
-func (c SystemCobblerSystem) GetCmdLine(command string, inter Cinterface) []string {
+func (c CobblerSystem) GetCmdLine(command string, inter CobblerSystemNIC) []string {
 	var cmdLine []string
 
 	if command == "list" {
@@ -106,16 +106,16 @@ func (c SystemCobblerSystem) GetCmdLine(command string, inter Cinterface) []stri
 	return cmdLine
 }
 
-func (c SystemCobblerSystem) SystemExists() bool {
+func (c CobblerSystem) SystemExists() bool {
 
-	args := c.GetCmdLine("list", Cinterface{})
+	args := c.GetCmdLine("list", CobblerSystemNIC{})
 
 	cmdResult := exec.Command(CMD, args...)
 
 	return cmdResult.Err != nil
 }
 
-func (c SystemCobblerSystem) Import() error {
+func (c CobblerSystem) Import() error {
 
 	if c.SystemExists() {
 		return nil
@@ -123,7 +123,7 @@ func (c SystemCobblerSystem) Import() error {
 
 	//log.Println("Adding server")
 
-	args := c.GetCmdLine("add", Cinterface{})
+	args := c.GetCmdLine("add", CobblerSystemNIC{})
 
 	log.Printf("Running cobbler %s", args)
 
@@ -138,7 +138,7 @@ func (c SystemCobblerSystem) Import() error {
 
 	// log.Println("Adding interfaces")
 
-	for _, inter := range c.Cinterfaces {
+	for _, inter := range c.NICs {
 		args := c.GetCmdLine("edit", inter)
 
 		log.Printf("Running cobbler %s", args)
@@ -152,7 +152,7 @@ func (c SystemCobblerSystem) Import() error {
 		}
 	}
 
-	args = c.GetCmdLine("remove-default-interface", Cinterface{})
+	args = c.GetCmdLine("remove-default-interface", CobblerSystemNIC{})
 
 	cmd = exec.Command(CMD, args...)
 

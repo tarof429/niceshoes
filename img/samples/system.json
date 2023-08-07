@@ -4,7 +4,7 @@
     "profile": "centos79-x86_64",
     "hostname": "localhost",
     "kernelOptons": "",
-    "interfaces": [
+    "nics": [
       {
         "name": "eth0",
         "netmask": "255.255.255.0",
@@ -28,7 +28,7 @@
     "profile": "centos79-x86_64",
     "hostname": "localhost2",
     "kernelOptons": "",
-    "interfaces": [
+    "nics": [
       {
         "name": "eth0",
         "netmask": "255.255.255.0",
@@ -46,7 +46,7 @@
     "nameServers": "8.8.8.8 4.4.4.4",
     "nextServerV4": "192.168.1.20",
     "kernelOptons": "",
-    "interfaces": [
+    "nics": [
       {
         "name": "eth0",
         "netmask": "255.255.255.0",

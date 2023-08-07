@@ -12,7 +12,7 @@ import (
 	"github.com/briandowns/spinner"
 )
 
-func load(file *string) ([]niceshoes.SystemCobblerSystem, error) {
+func load(file *string) ([]niceshoes.CobblerSystem, error) {
 	data, err := os.ReadFile(*file)
 
 	if err != nil {
@@ -20,7 +20,7 @@ func load(file *string) ([]niceshoes.SystemCobblerSystem, error) {
 		return nil, err
 	}
 
-	var cs []niceshoes.SystemCobblerSystem
+	var cs []niceshoes.CobblerSystem
 
 	if err := json.Unmarshal(data, &cs); err != nil {
 		log.Fatalf("JSON unmarshalling failed: %s\n", err)

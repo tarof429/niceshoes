@@ -9,7 +9,7 @@ type SimulatorCobblerSystem struct {
 	KernelOptions string       `json:"kernelOptons"`
 	NameServers   string       `json:"nameServers"`
 	NextServerV4    string       `json:"nextServerV4"`
-	Cinterfaces   []Cinterface `json:"interfaces"`
+	Cinterfaces   []CobblerSystemNIC `json:"interfaces"`
 }
 
 func (c SimulatorCobblerSystem) GetName() string {
@@ -36,16 +36,23 @@ func (c SimulatorCobblerSystem) GetNextServerV4() string {
 	return c.NextServerV4
 }
 
-func (c SimulatorCobblerSystem) GetCmdLine(command string, inter Cinterface) []string {
+func (c SimulatorCobblerSystem) GetCmdLine(command string, inter CobblerSystemNIC) []string {
 
-	realSystem := SystemCobblerSystem(c)
+	temp := CobblerSystem{
+		Hostname:  c.Hostname,
+		KernelOptions: c.KernelOptions,
+		Name:  c.Name,
+		NameServers: c.NameServers,
+		NextServerV4: c.NextServerV4,
+		Profile:  c.Profile,
+	}
 
-	return realSystem.GetCmdLine(command, inter)
+	return temp.GetCmdLine(command, inter)
 }
 
 func (c SimulatorCobblerSystem) Import() error {
 
-	args := c.GetCmdLine("add", Cinterface{})
+	args := c.GetCmdLine("add", CobblerSystemNIC{})
 
 	log.Printf("Running %s %s", CMD, args)
 
