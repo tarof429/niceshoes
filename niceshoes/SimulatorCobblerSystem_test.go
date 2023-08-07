@@ -12,7 +12,7 @@ func TestSimulator(t *testing.T) {
 		Hostname: "localhost",
 		KernelOptions: "\"foo=x bar=y\"",
 		NameServers: "192.168.1.1",
-		NextServer: "localhost",
+		NextServerV4: "localhost",
 		Cinterfaces: []Cinterface{},
 	}
 
@@ -22,8 +22,8 @@ func TestSimulator(t *testing.T) {
 		"--hostname=" + c.GetHostname(), 
 		"--profile=" + c.GetProfile(),
 		"--kernel-options=" + c.GetKernelOptions(),
-		"--name-servers=" + c.GetNameServers(),
-		"--next-server=" + c.GetNextServer(),
+		"--name-servers=\"" + c.GetNameServers() + "\"",
+		"--next-server=" + c.GetNextServerV4(),
 	}
 
 	if compareArrays(cmdLine, expected) != true {

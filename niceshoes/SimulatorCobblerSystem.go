@@ -8,7 +8,7 @@ type SimulatorCobblerSystem struct {
 	Profile       string       `json:"profile"`
 	KernelOptions string       `json:"kernelOptons"`
 	NameServers   string       `json:"nameServers"`
-	NextServer    string       `json:"nextServer"`
+	NextServerV4    string       `json:"nextServerV4"`
 	Cinterfaces   []Cinterface `json:"interfaces"`
 }
 
@@ -32,8 +32,8 @@ func (c SimulatorCobblerSystem) GetNameServers() string {
 	return c.NameServers
 }
 
-func (c SimulatorCobblerSystem) GetNextServer() string {
-	return c.NextServer
+func (c SimulatorCobblerSystem) GetNextServerV4() string {
+	return c.NextServerV4
 }
 
 func (c SimulatorCobblerSystem) GetCmdLine(command string, inter Cinterface) []string {

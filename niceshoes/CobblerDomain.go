@@ -7,7 +7,7 @@ type CobblerDomain interface {
 	GetProfile() string
 	GetKernelOptions() string
 	GetNameServers() string
-	GetNextServer() string
+	GetNextServerV4() string
 	GetCmdLine(command string, inter Cinterface) []string
 }
 

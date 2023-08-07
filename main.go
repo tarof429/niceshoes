@@ -7,6 +7,9 @@ import (
 	"log"
 	"os"
 	"tarof429/niceshoes/niceshoes"
+	"time"
+
+	"github.com/briandowns/spinner"
 )
 
 func load(file *string) ([]niceshoes.SystemCobblerSystem, error) {
@@ -41,14 +44,19 @@ func main() {
 	}
 
 	if err == nil {
+		s := spinner.New(spinner.CharSets[9], 100*time.Millisecond) 
+		s.Color("Black")
+		s.Start()
+
 		for _, cs := range css {
 			//log.Printf("Importing: %s", cs)
 			err := cs.Import()
 			//err := cs.ImportSimulator()
 			if err != nil {
-				log.Fatal("Unable to import ", cs.Name)
+				log.Printf("Unable to import %s", cs.Name)
 			}
 		}
+		s.Stop()
 	}
 
 }

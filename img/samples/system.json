@@ -3,6 +3,7 @@
     "name": "test-system",
     "profile": "centos79-x86_64",
     "hostname": "localhost",
+    "kernelOptons": "",
     "interfaces": [
       {
         "name": "eth0",
@@ -10,7 +11,6 @@
         "macaddress": "AC:AB:AA:12:24:CA",
         "gateway": "192.168.1.1",
         "ipAddress": "192.168.1.10",
-        "kernelOptons": "",
         "static": "1"
       },
       {
@@ -27,6 +27,7 @@
     "name": "test-system2",
     "profile": "centos79-x86_64",
     "hostname": "localhost2",
+    "kernelOptons": "",
     "interfaces": [
       {
         "name": "eth0",
@@ -34,7 +35,24 @@
         "macaddress": "AC:AB:AA:12:24:CC",
         "gateway": "192.168.1.1",
         "ipAddress": "192.168.1.15",
-        "kernelOptons": "",
+        "static": "1"
+      }
+    ]
+  },
+  {
+    "name": "test-system3",
+    "profile": "centos79-x86_64",
+    "hostname": "localhost3",
+    "nameServers": "8.8.8.8 4.4.4.4",
+    "nextServerV4": "192.168.1.20",
+    "kernelOptons": "",
+    "interfaces": [
+      {
+        "name": "eth0",
+        "netmask": "255.255.255.0",
+        "macaddress": "AC:CB:AA:12:24:CC",
+        "gateway": "192.168.1.1",
+        "ipAddress": "192.168.1.17",
         "static": "1"
       }
     ]

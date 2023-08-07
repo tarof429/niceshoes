@@ -15,7 +15,7 @@ type SystemCobblerSystem struct {
 	Profile       string       `json:"profile"`
 	KernelOptions string       `json:"kernelOptons"`
 	NameServers   string       `json:"nameServers"`
-	NextServer    string       `json:"nextServer"`
+	NextServerV4    string       `json:"nextServerV4"`
 	Cinterfaces   []Cinterface `json:"interfaces"`
 }
 
@@ -39,8 +39,8 @@ func (c SystemCobblerSystem) GetNameServers() string {
 	return c.NameServers
 }
 
-func (c SystemCobblerSystem) GetNextServer() string {
-	return c.NextServer
+func (c SystemCobblerSystem) GetNextServerV4() string {
+	return c.NextServerV4
 }
 
 // GetCmdline returns the command-line string bsed on the command and
@@ -62,12 +62,12 @@ func (c SystemCobblerSystem) GetCmdLine(command string, inter Cinterface) []stri
 
 		if len(c.NameServers) > 0 {
 			cmdLine = append(cmdLine,
-				"--name-servers="+c.NameServers)
+				"--name-servers="+ "\"" + c.NameServers + "\"")
 		}
 
-		if len(c.NextServer) > 0 {
+		if len(c.NextServerV4) > 0 {
 			cmdLine = append(cmdLine,
-				"--next-server="+c.NextServer)
+				"--next-server-v4="+c.NextServerV4)
 		}
 
 	} else if command == "edit" {
@@ -121,24 +121,27 @@ func (c SystemCobblerSystem) Import() error {
 		return nil
 	}
 
-	log.Println("Adding server")
+	//log.Println("Adding server")
 
 	args := c.GetCmdLine("add", Cinterface{})
 
-	// log.Printf("Running cobbler %s", args)
+	log.Printf("Running cobbler %s", args)
 
 	cmd := exec.Command(CMD, args...)
 
 	_, err := cmd.Output()
 
 	if err != nil {
-		log.Printf("Error while adding: %s\n", err.Error())
+		//log.Printf("Error while adding: %s\n", c.Name)
+		return err
 	}
 
 	// log.Println("Adding interfaces")
 
 	for _, inter := range c.Cinterfaces {
 		args := c.GetCmdLine("edit", inter)
+
+		log.Printf("Running cobbler %s", args)
 
 		cmd = exec.Command(CMD, args...)
 
@@ -160,7 +163,7 @@ func (c SystemCobblerSystem) Import() error {
 		return err
 	}
 	
-	log.Printf("Successfully added %s\n", c.Name)
+	//log.Printf("Successfully added %s\n", c.Name)
 
 	return nil
 }
