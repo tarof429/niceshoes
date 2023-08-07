@@ -9,6 +9,8 @@ const (
 	CMD = "cobbler"
 )
 
+var ImportMessages []string
+
 type CobblerSystem struct {
 	Name          string       `json:"name"`
 	Hostname      string       `json:"hostname"`
@@ -43,8 +45,16 @@ func (c CobblerSystem) GetNextServerV4() string {
 	return c.NextServerV4
 }
 
+func AddImportMessage(m string) {
+	ImportMessages = append(ImportMessages, m)
+}
+
+func GetImportMessages() [] string {
+	return ImportMessages
+}
+
 // GetCmdline returns the command-line string bsed on the command and
-// values in Cinterface
+// values in CobblerSystem
 func (c CobblerSystem) GetCmdLine(command string, inter CobblerSystemNIC) []string {
 	var cmdLine []string
 
@@ -106,6 +116,7 @@ func (c CobblerSystem) GetCmdLine(command string, inter CobblerSystemNIC) []stri
 	return cmdLine
 }
 
+// SystemExists checks whether the system exists
 func (c CobblerSystem) SystemExists() bool {
 
 	args := c.GetCmdLine("list", CobblerSystemNIC{})
@@ -115,33 +126,25 @@ func (c CobblerSystem) SystemExists() bool {
 	return cmdResult.Err != nil
 }
 
+// Import imports a CobblerSystem
 func (c CobblerSystem) Import() error {
 
 	if c.SystemExists() {
 		return nil
 	}
 
-	//log.Println("Adding server")
-
 	args := c.GetCmdLine("add", CobblerSystemNIC{})
-
-	log.Printf("Running cobbler %s", args)
 
 	cmd := exec.Command(CMD, args...)
 
 	_, err := cmd.Output()
 
 	if err != nil {
-		//log.Printf("Error while adding: %s\n", c.Name)
 		return err
 	}
 
-	// log.Println("Adding interfaces")
-
 	for _, inter := range c.NICs {
 		args := c.GetCmdLine("edit", inter)
-
-		log.Printf("Running cobbler %s", args)
 
 		cmd = exec.Command(CMD, args...)
 
@@ -162,8 +165,6 @@ func (c CobblerSystem) Import() error {
 		log.Printf("Unable to remove default interface: %s\n", err.Error())
 		return err
 	}
-	
-	//log.Printf("Successfully added %s\n", c.Name)
 
 	return nil
 }

@@ -49,14 +49,19 @@ func main() {
 		s.Start()
 
 		for _, cs := range css {
-			//log.Printf("Importing: %s", cs)
 			err := cs.Import()
 			//err := cs.ImportSimulator()
 			if err != nil {
-				log.Printf("Unable to import %s", cs.Name)
+				niceshoes.AddImportMessage(fmt.Sprintf("Unable to import %s", cs.Name))
+			} else {
+				niceshoes.AddImportMessage(fmt.Sprintf("Successfully imported %s", cs.Name))
 			}
 		}
 		s.Stop()
+	}
+
+	for _, message := range niceshoes.GetImportMessages() {
+		fmt.Println(message)
 	}
 
 }
