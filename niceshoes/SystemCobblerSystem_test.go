@@ -27,7 +27,7 @@ func compareArrays(x []string, y []string) bool {
 	return true
 }
 
-func TestList(t *testing.T) {
+func TestReport(t *testing.T) {
 
 	c := CobblerSystem{
 		Name:        "test",
@@ -36,8 +36,8 @@ func TestList(t *testing.T) {
 		NICs: []CobblerSystemNIC{},
 	}
 
-	cmdLine := c.GetCmdLine("list", CobblerSystemNIC{})
-	expected := []string{"system", "list", "--name=" + c.Name}
+	cmdLine := c.GetCmdLine("report", CobblerSystemNIC{})
+	expected := []string{"system", "report", "--name=" + c.Name}
 
 	if compareArrays(cmdLine, expected) != true {
 		t.Fail()

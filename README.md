@@ -57,9 +57,7 @@ cobbler import --path=/mnt --name=centos79
 
 ```
 # /usr/local/bin/niceshoes --file samples/system.json
-Successfully imported test-system
-Successfully imported test-system2
-Successfully imported test-system3
+3 systems imported successfully
 ```
 
 # References

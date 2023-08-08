@@ -3,13 +3,12 @@ package niceshoes
 import (
 	"log"
 	"os/exec"
+	"strings"
 )
 
 const (
 	CMD = "cobbler"
 )
-
-var ImportMessages []string
 
 type CobblerSystem struct {
 	Name          string       `json:"name"`
@@ -45,21 +44,15 @@ func (c CobblerSystem) GetNextServerV4() string {
 	return c.NextServerV4
 }
 
-func AddImportMessage(m string) {
-	ImportMessages = append(ImportMessages, m)
-}
 
-func GetImportMessages() [] string {
-	return ImportMessages
-}
 
 // GetCmdline returns the command-line string bsed on the command and
 // values in CobblerSystem
 func (c CobblerSystem) GetCmdLine(command string, inter CobblerSystemNIC) []string {
 	var cmdLine []string
 
-	if command == "list" {
-		cmdLine = []string{"system", "list", "--name=" + c.Name}
+	if command == "report" {
+		cmdLine = []string{"system", "report", "--name=" + c.Name}
 	} else if command == "add" {
 		cmdLine = []string{"system", "add", "--name=" + c.Name,
 			"--hostname=" + c.Hostname,
@@ -119,19 +112,19 @@ func (c CobblerSystem) GetCmdLine(command string, inter CobblerSystemNIC) []stri
 // SystemExists checks whether the system exists
 func (c CobblerSystem) SystemExists() bool {
 
-	args := c.GetCmdLine("list", CobblerSystemNIC{})
+	args := c.GetCmdLine("report", CobblerSystemNIC{})
 
-	cmdResult := exec.Command(CMD, args...)
+	cmd := exec.Command(CMD, args...)
 
-	return cmdResult.Err != nil
+	output, _ := cmd.Output()
+
+	s := string(output)
+
+	return !strings.Contains(s, "No system found")
 }
 
 // Import imports a CobblerSystem
 func (c CobblerSystem) Import() error {
-
-	if c.SystemExists() {
-		return nil
-	}
 
 	args := c.GetCmdLine("add", CobblerSystemNIC{})
 
