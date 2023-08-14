@@ -10,7 +10,7 @@ import (
 type Importer struct {
 	cobblerSystems []CobblerSystem
 	importMessages []string
-	count int
+	expected, actual int
 
 }
 
@@ -27,6 +27,8 @@ func (importer * Importer) Load(file *string) error {
 		log.Fatalf("JSON unmarshalling failed: %s\n", err)
 	}
 
+	importer.expected = len(importer.cobblerSystems)
+
 	return nil
 }
 
@@ -41,7 +43,7 @@ func (importer *Importer) Import() {
 			if err != nil {
 				importer.AddImportMessage(fmt.Sprintf("Error importing %s", cs.Name))
 			} else {
-				importer.count++
+				importer.actual++
 			}
 		}
 	}
@@ -55,6 +57,10 @@ func (importer *Importer) GetImportMessages() [] string {
 	return importer.importMessages
 }
 
-func (importer *Importer) GetCount() int {
-	return importer.count
+func (importer *Importer) GetActual() int {
+	return importer.actual
+}
+
+func (importer *Importer) GetExpected() int {
+	return importer.expected
 }

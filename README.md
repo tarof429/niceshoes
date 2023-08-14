@@ -2,6 +2,8 @@
 
 *niceshoes* is a tool to import cobbler systems described as JSON into cobbler. 
 
+<img src="./niceshoes.gif" />
+
 # Testing
 
 This project builds a docker container to test the tool. 
@@ -57,8 +59,12 @@ cobbler import --path=/mnt --name=centos79
 
 ```
 # /usr/local/bin/niceshoes --file samples/system.json
-3 systems imported successfully
+3/3 systems imported successfully
 ```
+
+## Compatibility
+
+Currently only Cobbler 3.3.3 is supported. To support older versions of Cobbler we would need to detect the version of Cobbler being used.
 
 # References
 

@@ -37,16 +37,19 @@ func main() {
 		s.Stop()
 	}
 
-	count := importer.GetCount()
+	actual := importer.GetActual()
+	expected := importer.GetExpected()
 
 	for _, message := range importer.GetImportMessages() {
 		fmt.Println(message)
 	}
 	
-	if count == 0 {
+	if actual == 0 {
 		fmt.Printf("%s\n", "Nothing was imported")
 	} else {
-		fmt.Printf("%d system(s) imported successfully\n", count)
+		fmt.Printf("%d/%d system(s) imported successfully\n", actual, expected)
+		fmt.Println("Happy cobblering!")
 	}
+
 
 }
